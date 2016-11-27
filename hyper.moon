@@ -4,44 +4,45 @@ mouse = require 'mouse'
 layout = require 'layout'
 app = require 'app'
 bind = hs.hotkey.bind
+util = require 'util'
 list =
-  a: 'com.github.atom'
+  -- a: See in key.moon
   b: 'com.tapbots.TweetbotMac'
-  c: 'com.apple.iCal'
-  d: 'com.kapeli.dashdoc'
-  e: 'com.bohemiancoding.sketch3'
-  f: 'com.apple.finder'
-  g: ''
-  h: layout\leftHalf
-  i: 'com.netease.163music'
-  j: layout\center
-  k: layout\max
-  l: layout\rightHalf
-  m: 'com.apple.iChat'
-  n: 'com.apple.Notes'
-  o: 'com.apple.AddressBook'
-  p: ''
+  c: 'com.google.Chrome'
+  -- d: See in key.moon
+  e: 'org.gnu.Emacs'
+  f: 'org.mozilla.firefox'
+  g: 'com.torusknot.SourceTreeNotMAS'
+  h: ''
+  i: 'com.apple.iTunes'
+  j: ''
+  k: ''
+  l: 'org.telegram.desktop'
+  m: 'com.francescodilorenzo.Mailbro'
+  n: 'com.apple.finder'
+  o: 'com.agilebits.onepassword-osx'
+  p: 'com.readdle.PDFExpert-Mac'
   q: 'com.tencent.qq'
-  r: 'com.apple.reminders'
-  s: 'com.tinyspeck.slackmacgap'
-  t: 'com.tdesktop.Telegram'
+  r: ''
+  -- s: See in key.moon
+  t: 'com.googlecode.iterm2'
   u: ''
   v: ''
   w: 'com.tencent.xinWeChat'
-  x: 'com.readdle.PDFExpert-Mac'
-  y: 'com.agilebits.onepassword4'
+  x: ''
+  y: ''
   z: ''
-  ['0']: 'com.torusknot.SourceTreeNotMAS'
+  ['0']: ''
   -- ['0']: 'com.axosoft.gitkraken'
-  ['1']: 'com.googlecode.iterm2'
+  ['1']: -> util\reload!
   -- ['1']: 'co.zeit.hyperterm'
-  ['2']: 'com.google.Chrome'
-  [',']: 'com.apple.systempreferences'
-  ['.']: mouse.clickNotification
+  ['2']: ''
+  [',']: ''
+  ['.']: ''
   ['\\']: -> hs.openConsole true
   ['-']: ''
   ['=']: ''
-  tab: layout\screen
+  -- tab: layout\screen
   escape: ''
   up: layout\upHalf
   down: layout\downHalf
@@ -50,4 +51,4 @@ for k, v in pairs list
     bind conf.hyper0, k, v
   elseif #v > 0
     bind conf.hyper0, k, app.toggleByBundleID(v)
-    bind conf.hyper1, k, app.toggleByBundleID(v, true)
+    -- bind conf.hyper1, k, app.toggleByBundleID(v, true)
