@@ -80,9 +80,9 @@ sys = (name, mods={}) ->
     sysEvent(name, false)\setFlags(mods)\post!
 
 key = (mods, key, isdown) ->
-  -- _.print mods
-  -- _.print key
-  -- _.print isdown
+  _.print mods
+  _.print key
+  _.print isdown
   key = if _.isNumber key then key else codes[key]
   keyEvent(mods, '', isdown)\setKeyCode key
 
@@ -92,7 +92,7 @@ export state = {
 
 -- Hyper0 + A, S, D to inputSource US, CHS, JP
 inputSourceUS = 'com.apple.keylayout.US'
-inputSourceCHS = 'com.googlecode.rimeime.inputmethod.Squirrel.Rime'
+inputSourceCHS = 'com.sogou.inputmethod.sogou.pinyin'
 inputSourceJP = 'com.google.inputmethod.Japanese.base'
 
 switchInputSource = (fromSource, toSource) ->
@@ -100,9 +100,9 @@ switchInputSource = (fromSource, toSource) ->
     switch source
       when inputSourceUS
         return 1
-      when inputSourceJP
-        return 2
       when inputSourceCHS
+        return 2
+      when inputSourceJP
         return 3
       else return nil
   fsrcPos = sourcePosition fromSource
@@ -121,9 +121,11 @@ isVimBindingApp = ->
 export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   keyboardType = e\getProperty keyboardEventKeyboardType
   -- print keyboardType
-  return unless keyboardType and _.includes conf.enabledDevice, keyboardType
+  -- return unless keyboardType and _.includes conf.enabledDevice, keyboardType
   -- return true if hasExternalDevice! and keyboardType and _.includes conf.disableDevice, keyboardType
   type, code, flags = e\getType!, e\getKeyCode!, e\getFlags!
+  --print code
+  --print flags
   mods = _.keys flags
   -- print math.floor((util.now!-state.startTime+0.5)*100)/100, type, code, _.str(mods)
 
@@ -167,7 +169,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       return true
   elseif state.spaceDown and _.str(mods) == '{}' and type == keyDown
     state.spaceCombo = true
-    mods = _.union mods, conf.hyper0
+    mods = _.union mods, conf.lcag
     switch code
       when codes['a']
         return switchInputSource hs.keycodes.currentSourceID!, inputSourceUS
