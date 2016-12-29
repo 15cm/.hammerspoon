@@ -48,7 +48,7 @@ list =
   down: layout\downHalf
 for k, v in pairs list
   if type(v) == 'function'
-    bind conf.lcag, k, nil, v
+    bind conf.lcag, k, v
   elseif #v > 0
     bind conf.lcag, k, app.toggleByBundleID(v)
     -- bind conf.hyper1, k, app.toggleByBundleID(v, true)
