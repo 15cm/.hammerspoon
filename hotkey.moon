@@ -5,7 +5,7 @@ app = require 'app'
 bind = hs.hotkey.bind
 util = require 'util'
 inputsrc = require 'inputsrc'
-list =
+listLcag =
   a: inputsrc\selectUS
   b: 'com.tapbots.TweetbotMac'
   c: 'com.google.Chrome'
@@ -32,21 +32,16 @@ list =
   x: ''
   y: ''
   z: ''
-  ['0']: ''
   -- ['0']: 'com.axosoft.gitkraken'
-  ['1']: -> util\reload!
   -- ['1']: 'co.zeit.hyperterm'
   ['2']: ''
-  [',']: ''
   ['.']: ''
   ['\\']: -> hs.openConsole true
+  ['\'']: -> util\reload!
   ['-']: ''
-  ['=']: ''
-  -- tab: layout\screen
-  escape: ''
-  up: layout\upHalf
-  down: layout\downHalf
-for k, v in pairs list
+  -- ['=']: ''
+
+for k, v in pairs listLcag
   if type(v) == 'function'
     bind conf.lcag, k, v
   elseif #v > 0
