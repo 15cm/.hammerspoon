@@ -13,6 +13,10 @@ app =
         hs.application.launchOrFocusByBundleID id
         mouse.frontmost!
         layout\max! if max
+  activateByBundleID: (id) ->
+    () ->
+        hs.application.launchOrFocusByBundleID id
+        mouse.frontmost!
   running: (id, success, fail) ->
     app = hs.application.get id
     if app
