@@ -25,6 +25,8 @@ class packAligned
       x0 = (@r2 * x2 + @r1 * x1) / (@r1 + @r2)
       @w2\move("[#{x1}, #{y1}, #{x0}, #{y2}]")
       @w1\move("[#{x0}, #{y1}, #{x2}, #{y2}]")
+    @w1\focus!
+    @w2\focus!
   nextScreen: =>
     @w1\moveToScreen @w2\screen!\next!, true, true
     @w2\moveToScreen @w2\screen!\next!, true, true
