@@ -16,6 +16,10 @@ app =
   activateByBundleID: (id) ->
     () ->
         hs.application.launchOrFocusByBundleID id
+        if id == 'com.google.Chrome'
+          w = hs.window.frontmostWindow!
+          if w\title! == 'Tabs Outliner'
+            (hs.eventtap.event.newKeyEvent({'cmd'}, 'a', true)\setKeyCode 50)\post!
         mouse.frontmost!
   running: (id, success, fail) ->
     app = hs.application.get id
