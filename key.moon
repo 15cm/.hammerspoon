@@ -204,16 +204,16 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif state.oneDown and type == keyDown
     state.oneCombo = true
     layer1 =
-      sys:
-        q: 'PREVIOUS'
-        w: 'PLAY'
-        e: 'NEXT'
-        a: 'MUTE'
-        s: 'SOUND_DOWN'
-        d: 'SOUND_UP'
-        f: 'ILLUMINATION_DOWN'
-        g: 'ILLUMINATION_UP'
-        h: 'ILLUMINATION_TOGGLE'
+      -- sys:
+      --   q: 'PREVIOUS'
+      --   w: 'PLAY'
+      --   e: 'NEXT'
+      --   a: 'MUTE'
+      --   s: 'SOUND_DOWN'
+      --   d: 'SOUND_UP'
+      --   f: 'ILLUMINATION_DOWN'
+      --   g: 'ILLUMINATION_UP'
+      --   h: 'ILLUMINATION_TOGGLE'
       key:
         ['1']: 'f1'
         ['2']: 'f2'
@@ -227,30 +227,63 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         ['0']: 'f10'
         ['-']: 'f11'
         ['=']: 'f12'
-        delete: 'forwarddelete'
-        h: 'left'
-        j: 'down'
-        k: 'up'
-        l: 'right'
+      mod:
+        a: {conf.hyper, 'a'}
+        b: {conf.hyper, 'b'}
+        c: {conf.hyper, 'c'}
+        d: {conf.hyper, 'd'}
+        e: {conf.hyper, 'e'}
+        f: {conf.hyper, 'f'}
+        g: {conf.hyper, 'g'}
+        h: {conf.hyper, 'h'}
+        i: {conf.hyper, 'i'}
+        j: {conf.hyper, 'j'}
+        k: {conf.hyper, 'k'}
+        l: {conf.hyper, 'l'}
+        m: {conf.hyper, 'm'}
+        n: {conf.hyper, 'n'}
+        o: {conf.hyper, 'o'}
+        p: {conf.hyper, 'p'}
+        q: {conf.hyper, 'q'}
+        r: {conf.hyper, 'r'}
+        s: {conf.hyper, 's'}
+        t: {conf.hyper, 't'}
+        u: {conf.hyper, 'u'}
+        v: {conf.hyper, 'v'}
+        w: {conf.hyper, 'w'}
+        x: {conf.hyper, 'x'}
+        y: {conf.hyper, 'y'}
+        z: {conf.hyper, 'z'}
+        [';']: {conf.hyper, ';'}
+        ["'"]: {conf.hyper, "'"}
+        ['space']: {conf.hyper, 'space'}
+
     layerKey = layer1.key[codes[code]]
-    layerSys = layer1.sys[codes[code]]
+    -- layerSys = layer1.sys[codes[code]]
+    layerMod = layer1.mod[codes[code]]
     if layerKey
       return true, {
         key mods, layerKey, true
         key mods, layerKey, false
       }
-    elseif layerSys
-      sys layerSys
-      return true
-    elseif code == codes.z
-      itunes.setVolume 1
-      return true
-    elseif code == codes.x
-      itunes.volumeDown!
-      return true
-    elseif code == codes.c
-      itunes.volumeUp!
-      return true
+    elseif layerMod
+      { modMods, modKey } = layerMod
+      return true, {
+        key modMods, modKey, true
+        key modMods, modKey, false
+      }
+    -- elseif layerSys
+    --   sys layerSys
+    --   return true
+    -- elseif code == codes.z
+    --   itunes.setVolume 1
+    --   return true
+    -- elseif code == codes.x
+    --   itunes.volumeDown!
+    --   return true
+    -- elseif code == codes.c
+    --   itunes.volumeUp!
+    --   return true
   elseif state.oneDown and type == keyUp
     return true
 
