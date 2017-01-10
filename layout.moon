@@ -58,17 +58,19 @@ layout =
     w = @frontmost!
     -- print "Window title: #{w\title!}"
     app = w\application!
-    if app\name! == "Google Chrome" and w\title! ~= "Tabs Outliner" and app\findWindow('Tabs Outliner')
-      wTabOutliner = app\getWindow 'Tabs Outliner'
-      packAlignedFixed(wTabOutliner, w, 11)\moveTo(x1, y1, x2, y2, isRight)
+    sideWindowTitle = 'Sidewise'
+    sideWindowWidth = 14
+    if app\name! == "Google Chrome" and w\title! ~= sideWindowTitle and app\findWindow(sideWindowTitle)
+      wTabOutliner = app\getWindow sideWindowTitle
+      packAlignedFixed(wTabOutliner, w, sideWindowWidth)\moveTo(x1, y1, x2, y2, isRight)
     else
       w\move("[#{x1}, #{y1}, #{x2}, #{y2}]")
   nextScreen: =>
     w = @frontmost!
     app = w\application!
-    if app\name! == "Google Chrome" and w\title! ~= "Tabs Outliner" and app\findWindow('Tabs Outliner')
-      wTabOutliner = app\getWindow 'Tabs Outliner'
-      packAlignedFixed(wTabOutliner, w, 11)\nextScreen!
+    if app\name! == "Google Chrome" and w\title! ~= sideWindowTitle and app\findWindow(sideWindowTitle)
+      wTabOutliner = app\getWindow sideWindowTitle
+      packAlignedFixed(wTabOutliner, w, sideWindowWidth)\nextScreen!
     else
       w\moveToScreen w\screen!\next!, true, true
   leftOneThird: =>
