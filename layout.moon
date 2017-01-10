@@ -31,6 +31,26 @@ class packAligned
     @w1\moveToScreen @w2\screen!\next!, true, true
     @w2\moveToScreen @w2\screen!\next!, true, true
 
+class packAlignedFixed
+  new: (w1, w2, width1) =>
+    @w1 = w1
+    @w2 = w2
+    @width1 = width1
+  moveTo: (x1, y1, x2, y2, isRight = false) =>
+    if not isRight
+      x0 = (x1 + @width1)
+      @w1\move("[#{x1}, #{y1}, #{x0}, #{y2}]")
+      @w2\move("[#{x0}, #{y1}, #{x2}, #{y2}]")
+    else
+      x0 = (x2 - @width1)
+      @w2\move("[#{x1}, #{y1}, #{x0}, #{y2}]")
+      @w1\move("[#{x0}, #{y1}, #{x2}, #{y2}]")
+    @w1\focus!
+    @w2\focus!
+  nextScreen: =>
+    @w1\moveToScreen @w2\screen!\next!, true, true
+    @w2\moveToScreen @w2\screen!\next!, true, true
+
 layout =
   frontmost: ->
     hs.window.frontmostWindow!
@@ -40,7 +60,7 @@ layout =
     app = w\application!
     if app\name! == "Google Chrome" and w\title! ~= "Tabs Outliner" and app\findWindow('Tabs Outliner')
       wTabOutliner = app\getWindow 'Tabs Outliner'
-      packAligned(wTabOutliner, w, 1, 3)\moveTo(x1, y1, x2, y2, isRight)
+      packAlignedFixed(wTabOutliner, w, 11)\moveTo(x1, y1, x2, y2, isRight)
     else
       w\move("[#{x1}, #{y1}, #{x2}, #{y2}]")
   nextScreen: =>
@@ -48,7 +68,7 @@ layout =
     app = w\application!
     if app\name! == "Google Chrome" and w\title! ~= "Tabs Outliner" and app\findWindow('Tabs Outliner')
       wTabOutliner = app\getWindow 'Tabs Outliner'
-      packAligned(wTabOutliner, w, 1, 3)\nextScreen!
+      packAlignedFixed(wTabOutliner, w, 11)\nextScreen!
     else
       w\moveToScreen w\screen!\next!, true, true
   leftOneThird: =>
