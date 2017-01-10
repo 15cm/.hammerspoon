@@ -54,23 +54,22 @@ class packAlignedFixed
 layout =
   frontmost: ->
     hs.window.frontmostWindow!
+  sideWindowTitle: 'Sidewise'
+  sideWindowWidth: 14
   moveTo: (x1, y1, x2, y2, isRight = false) =>
     w = @frontmost!
-    -- print "Window title: #{w\title!}"
     app = w\application!
-    sideWindowTitle = 'Sidewise'
-    sideWindowWidth = 14
-    if app\name! == "Google Chrome" and w\title! ~= sideWindowTitle and app\findWindow(sideWindowTitle)
-      wTabOutliner = app\getWindow sideWindowTitle
-      packAlignedFixed(wTabOutliner, w, sideWindowWidth)\moveTo(x1, y1, x2, y2, isRight)
+    if app\name! == "Google Chrome" and w\title! ~= @sideWindowTitle and app\findWindow(@sideWindowTitle)
+      sideWindow = app\getWindow @sideWindowTitle
+      packAlignedFixed(sideWindow, w, @sideWindowWidth)\moveTo(x1, y1, x2, y2, isRight)
     else
       w\move("[#{x1}, #{y1}, #{x2}, #{y2}]")
   nextScreen: =>
     w = @frontmost!
     app = w\application!
-    if app\name! == "Google Chrome" and w\title! ~= sideWindowTitle and app\findWindow(sideWindowTitle)
-      wTabOutliner = app\getWindow sideWindowTitle
-      packAlignedFixed(wTabOutliner, w, sideWindowWidth)\nextScreen!
+    if app\name! == "Google Chrome" and w\title! ~= @sideWindowTitle and app\findWindow(@sideWindowTitle)
+      sideWindow = app\getWindow @sideWindowTitle
+      packAlignedFixed(sideWindow, w, @sideWindowWidth)\nextScreen!
     else
       w\moveToScreen w\screen!\next!, true, true
   leftOneThird: =>
