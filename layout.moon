@@ -5,7 +5,7 @@ layout =
   frontmost: ->
     hs.window.frontmostWindow!
   sideWindowTitle: 'Sidewise'
-  sideWindowWidth: 14
+  sideWindowWidth: 12
   moveTo: (x1, y1, x2, y2, isRight = false) =>
     w = @frontmost!
     app = w\application!
