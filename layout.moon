@@ -36,8 +36,8 @@ class packAlignedFixed
     @w1 = w1
     @w2 = w2
     @width1 = width1
-  moveTo: (x1, y1, x2, y2, isRight = false) =>
-    if not isRight
+  moveTo: (x1, y1, x2, y2, sideIsRight = true) =>
+    if not sideIsRight
       x0 = (x1 + @width1)
       @w1\move("[#{x1}, #{y1}, #{x0}, #{y2}]")
       @w2\move("[#{x0}, #{y1}, #{x2}, #{y2}]")
@@ -56,7 +56,7 @@ layout =
     hs.window.frontmostWindow!
   sideWindowTitle: 'Sidewise'
   sideWindowWidth: 12
-  moveTo: (x1, y1, x2, y2, isRight = false) =>
+  moveTo: (x1, y1, x2, y2, sideIsRight = true) =>
     w = @frontmost!
     app = w\application!
     if app\name! == "Google Chrome" and w\title! ~= @sideWindowTitle and app\findWindow(@sideWindowTitle)
@@ -79,11 +79,11 @@ layout =
   leftTwoThird: =>
     @moveTo 0, 0, 67, 100
   rightOneThird: =>
-    @moveTo 67, 0, 100, 100, true
+    @moveTo 67, 0, 100, 100
   rightHalf: =>
-    @moveTo 50, 0, 100, 100, true
+    @moveTo 50, 0, 100, 100
   rightTwoThird: =>
-    @moveTo 33, 0, 100, 100, true
+    @moveTo 33, 0, 100, 100
   max: =>
     @moveTo 0, 0, 100, 100
   leftUpCorner: =>
