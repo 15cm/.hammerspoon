@@ -1,25 +1,26 @@
 _ = require 'lodash'
 conf = require 'conf'
 layout = require 'layout'
+keyboard = require 'keyboard'
 app = require 'app'
 bind = hs.hotkey.bind
 util = require 'util'
 inputsrc = require 'inputsrc'
 listLcag =
   a: inputsrc\selectUS
-  b: 'com.tapbots.TweetbotMac'
+  b: 'com.apple.iBooksX'
   c: 'com.google.Chrome'
   d: inputsrc\selectJP
   e: 'org.gnu.Emacs'
-  f: 'com.apple.finder'
+  f: 'org.mozilla.firefox'
   g: 'com.torusknot.SourceTreeNotMAS'
   h: ''
   i: 'com.apple.iTunes'
-  j: ''
-  k: ''
+  j: 'com.jetbrains.intellij'
+  -- k: ''
   l: 'org.telegram.desktop'
   m: 'com.francescodilorenzo.Mailbro'
-  n: ''
+  n: 'com.apple.finder'
   o: 'com.agilebits.onepassword-osx'
   p: 'com.readdle.PDFExpert-Mac'
   q: 'com.tencent.qq'
@@ -29,8 +30,8 @@ listLcag =
   u: ''
   v: ''
   w: 'com.tencent.xinWeChat'
-  x: ''
-  y: ''
+  x: 'com.apple.dt.Xcode'
+  y: 'com.jetbrains.pycharm'
   z: ''
   -- ['0']: 'com.axosoft.gitkraken'
   -- ['1']: layout\leftOneThird
@@ -69,6 +70,9 @@ listHyper =
   [';']: layout\rightHalf
   ["'"]: layout\rightOneThird
   ['space']: layout\max
+
+bind {}, 'f17', keyboard\toggleInternalKeyboard
+
 for k, v in pairs listLcag
   if type(v) == 'function'
     bind conf.lcag, k, v
