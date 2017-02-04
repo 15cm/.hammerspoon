@@ -6,6 +6,8 @@ app = require 'app'
 bind = hs.hotkey.bind
 util = require 'util'
 inputsrc = require 'inputsrc'
+notificationCenter = require 'notification'
+
 listLcag =
   a: inputsrc\selectUS
   b: 'com.apple.iBooksX'
@@ -14,12 +16,12 @@ listLcag =
   e: 'org.gnu.Emacs'
   f: 'org.mozilla.firefox'
   g: 'com.torusknot.SourceTreeNotMAS'
-  h: ''
+  -- h: ''
   i: 'com.apple.iTunes'
-  j: 'com.jetbrains.intellij'
+  -- j: 'com.jetbrains.intellij'
   -- k: ''
   l: 'org.telegram.desktop'
-  m: 'com.francescodilorenzo.Mailbro'
+  m: 'tombeverley.wmail'
   n: 'com.apple.finder'
   o: 'com.agilebits.onepassword-osx'
   p: 'com.readdle.PDFExpert-Mac'
@@ -29,15 +31,16 @@ listLcag =
   t: 'com.googlecode.iterm2'
   u: ''
   v: ''
-  w: 'com.tencent.xinWeChat'
+  w: 'com.tapbots.TweetbotMac'
   x: 'com.apple.dt.Xcode'
-  y: 'com.jetbrains.pycharm'
-  z: ''
+  -- y: 'com.jetbrains.pycharm'
+  z: 'com.tencent.xinWeChat'
   -- ['0']: 'com.axosoft.gitkraken'
   -- ['1']: layout\leftOneThird
   -- ['2']: layout\rightHalf
   -- ['3']: layout\max
   -- ['4']: layout\screen
+  ["'"]: notificationCenter.switchBetweenTodayAndNotifications
   ['\\']: -> hs.openConsole true
 -- ['=']: ''
 listHyper =
