@@ -94,6 +94,10 @@ isVimBindingApp = ->
   app = hs.application.frontmostApplication!
   _.includes conf.vimBindingApp, app\bundleID!
 
+notEmacsBindingApp = ->
+  app = hs.application.frontmostApplication!
+  _.includes conf.notEmacsBindingApp, app\bundleID!
+
 export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   keyboardType = e\getProperty keyboardEventKeyboardType
   type, code, flags = e\getType!, e\getKeyCode!, e\getFlags!
@@ -141,6 +145,29 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
     if not isVimBindingApp!
       return true, {
         key {}, codes.left, isDown
+        }
+  -- C-a to home
+  elseif code == codes['a'] and _.str(mods) == '{"ctrl"}'
+    if notEmacsBindingApp!
+      return true, {
+        key {}, codes.home, isDown
+        }
+  -- C-e to end
+  elseif code == codes['e'] and _.str(mods) == '{"ctrl"}'
+    if notEmacsBindingApp!
+      return true, {
+        key {}, codes.end, isDown
+        }
+  -- Cmd-C-u to pageup
+  elseif code == codes['u'] and _.str(mods) == '{"cmd", "ctrl"}'
+    if not isVimBindingApp!
+      return true, {
+        key {}, codes.pageup, isDown
+        }
+  elseif code == codes['d'] and _.str(mods) == '{"cmd", "ctrl"}'
+    if not isVimBindingApp!
+      return true, {
+        key {}, codes.pagedown, isDown
         }
   elseif keyboard\isExternalKeyboard keyboardType
     return
