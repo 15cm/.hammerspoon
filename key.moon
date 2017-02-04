@@ -1,3 +1,4 @@
+
 -- 取 Apple 键盘和 60% 键盘相同的部分作为基础
 -- ,-----------------------------------------------------------------------------------------.
 -- |  ESC  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  | BSPC|BQT|
@@ -90,13 +91,20 @@ export state = {
   startTime: util.now!
 }
 
-isVimBindingApp = ->
+appBindingType = ->
   app = hs.application.frontmostApplication!
-  _.includes conf.vimBindingApp, app\bundleID!
+  if _.includes conf.omniBindingApp, app\bundleID!
+    return 'omni'
+  if _.includes conf.vimBindingApp, app\bundleID!
+    return 'vim'
+  elseif _.includes conf.partialVimBindingApp, app\bundleID!
+    return 'partial'
+  else
+    return 'other'
 
-notEmacsBindingApp = ->
+appIsTelegram = ->
   app = hs.application.frontmostApplication!
-  _.includes conf.notEmacsBindingApp, app\bundleID!
+  return if app\bundleID! == 'org.telegram.desktop' then true else false
 
 export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   keyboardType = e\getProperty keyboardEventKeyboardType
@@ -111,63 +119,97 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
 
   -- Mapping according to applications
   -- Emacs binding
-  -- C-h to Del
+  -- C-h: Del
   elseif code == codes['h'] and _.str(mods) == '{"ctrl"}'
       return true, {
         key {}, codes.delete, isDown
         }
-  -- C-d to FDEl
+  -- C-d: DEl
   elseif code == codes['d'] and _.str(mods) == '{"ctrl"}'
-    if not isVimBindingApp!
+    if appBindingType! == 'other'
       return true, {
         key {}, codes.forwarddelete, isDown
         }
-  -- C-n to down
+  -- C-n: down
   elseif code == codes['n'] and _.str(mods) == '{"ctrl"}'
-    if not isVimBindingApp!
+    if appBindingType! != 'vim'
       return true, {
         key {}, codes.down, isDown
         }
   -- C-p to up
   elseif code == codes['p'] and _.str(mods) == '{"ctrl"}'
-    if not isVimBindingApp!
+    if appBindingType! != 'vim'
       return true, {
       key {}, codes.up, isDown
         }
-  -- C-f to right
+  -- C-f: right
   elseif code == codes['f'] and _.str(mods) == '{"ctrl"}'
-    if not isVimBindingApp!
+    if appBindingType! != 'vim'
       return true, {
         key {}, codes.right, isDown
         }
-  -- C-b to left
+  -- C-b: left
   elseif code == codes['b'] and _.str(mods) == '{"ctrl"}'
-    if not isVimBindingApp!
+    if appBindingType! != 'vim'
       return true, {
         key {}, codes.left, isDown
         }
-  -- C-a to home
+  -- C-a: home
   elseif code == codes['a'] and _.str(mods) == '{"ctrl"}'
-    if notEmacsBindingApp!
+    if appIsTelegram!
       return true, {
         key {}, codes.home, isDown
         }
-  -- C-e to end
+  -- C-e: end
   elseif code == codes['e'] and _.str(mods) == '{"ctrl"}'
-    if notEmacsBindingApp!
+    if appIsTelegram!
       return true, {
         key {}, codes.end, isDown
         }
-  -- Cmd-C-u to pageup
+  -- C-k: kill to end
+  elseif code == codes['k'] and _.str(mods) == '{"ctrl"}'
+    if appIsTelegram!
+      return true, {
+        key {"cmd", "shift"}, codes.right, isDown
+        key {}, codes.delete, isDown
+        }
+  -- Cmd-C-u: pageup
   elseif code == codes['u'] and _.str(mods) == '{"cmd", "ctrl"}'
-    if not isVimBindingApp!
+    if appBindingType! != 'vim' and appBindingType! != 'partial'
       return true, {
         key {}, codes.pageup, isDown
         }
+  -- Cmd-C-u: pageup
   elseif code == codes['d'] and _.str(mods) == '{"cmd", "ctrl"}'
-    if not isVimBindingApp!
+    if appBindingType! != 'vim' and appBindingType! != 'partial'
       return true, {
         key {}, codes.pagedown, isDown
+        }
+ -- Alt-f: jump to next word
+  elseif code == codes['f'] and _.str(mods) == '{"alt"}'
+    if appBindingType! != 'omni'
+      return true, {
+        key {"alt"}, codes.right, isDown
+        }
+  -- Alf-b: jump to previous word
+  elseif code == codes['b'] and _.str(mods) == '{"alt"}'
+    if appBindingType! != 'omni'
+      return true, {
+        key {"alt"}, codes.left, isDown
+        }
+  -- Alt-d: kill next word
+  elseif code == codes['d'] and _.str(mods) == '{"alt"}'
+    if appBindingType! != 'omni'
+      return true, {
+        key {"alt", "shift"}, codes.right, isDown
+        key {}, codes.delete, isDown
+        }
+  -- Alt-h: kill previous word
+  elseif code == codes['h'] and _.str(mods) == '{"alt"}'
+    if appBindingType! != 'omni'
+      return true, {
+        key {"alt", "shift"}, codes.left, isDown
+        key {}, codes.delete, isDown
         }
   elseif keyboard\isExternalKeyboard keyboardType
     return
