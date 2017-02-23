@@ -97,12 +97,21 @@ appBindingType = ->
     return 'vim'
   elseif _.includes conf.partialVimBindingApp, app\bundleID!
     return 'partial'
+  elseif _.includes conf.notEmacsBindingApp, app\bundleID!
+    return 'notEmacs'
   else
     return 'other'
-
-appIsTelegram = ->
+isTotalVimBindingApp = ->
   app = hs.application.frontmostApplication!
-  return if app\bundleID! == 'org.telegram.desktop' then true else false
+  return if _.includes conf.totalVimBindingApp, app\bundleID! then true else false
+isPartialVimBindingApp = ->
+  app = hs.application.frontmostApplication!
+  return if _.includes conf.partialVimBindingApp, app\bundleID! then true else false
+isVimBindingApp = ->
+  return isTotalVimBindingApp or isPartialVimBindingApp
+isNotEmacsBindingApp = ->
+  app = hs.application.frontmostApplication!
+  return if _.includes conf.notEmacsBindingApp, app\bundleID! then true else false
 
 export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   keyboardType = e\getProperty keyboardEventKeyboardType
@@ -124,83 +133,85 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         }
   -- C-d: DEl
   elseif code == codes['d'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! == 'other'
+    if not isVimBindingApp!
       return true, {
         key {}, codes.forwarddelete, isDown
         }
   -- C-n: down
   elseif code == codes['n'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! != 'vim'
+    if not isTotalVimBindingApp!
       return true, {
         key {}, codes.down, isDown
         }
   -- C-p to up
   elseif code == codes['p'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! != 'vim'
+    if not isTotalVimBindingApp!
       return true, {
       key {}, codes.up, isDown
         }
   -- C-f: right
   elseif code == codes['f'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! != 'vim'
+    if not isTotalVimBindingApp!
       return true, {
         key {}, codes.right, isDown
         }
   -- C-b: left
   elseif code == codes['b'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! != 'vim'
+    if not isTotalVimBindingApp!
       return true, {
         key {}, codes.left, isDown
         }
   -- C-a: home
   elseif code == codes['a'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! == 'other'
+    if isNotEmacsBindingApp!
       return true, {
         key {"fn"}, codes.home, isDown
         }
   -- C-e: end
   elseif code == codes['e'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! == 'other'
+    if isNotEmacsBindingApp!
       return true, {
         key {"fn"}, codes.end, isDown
         }
   -- C-k: kill to end
   elseif code == codes['k'] and _.str(mods) == '{"ctrl"}'
-    if appBindingType! == 'other'
+    if isNotEmacsBindingApp!
       return true, {
         key {"cmd", "shift"}, codes.right, isDown
         key {}, codes.delete, isDown
         }
   -- Cmd-C-u: pageup
   elseif code == codes['u'] and _.str(mods) == '{"cmd", "ctrl"}'
-    if appBindingType! == 'other'
       return true, {
         key {}, codes.pageup, isDown
         }
   -- Cmd-C-u: pageup
   elseif code == codes['d'] and _.str(mods) == '{"cmd", "ctrl"}'
-    if appBindingType! == 'other'
       return true, {
         key {}, codes.pagedown, isDown
         }
  -- Alt-f: jump to next word
   elseif code == codes['f'] and _.str(mods) == '{"alt"}'
+    if not isTotalVimBindingApp!
       return true, {
         key {"alt"}, codes.right, isDown
         }
   -- Alf-b: jump to previous word
   elseif code == codes['b'] and _.str(mods) == '{"alt"}'
+    if not isTotalVimBindingApp!
       return true, {
         key {"alt"}, codes.left, isDown
         }
   -- Alt-d: kill next word
   elseif code == codes['d'] and _.str(mods) == '{"alt"}'
+    if not isTotalVimBindingApp!
       return true, {
         key {"alt", "shift"}, codes.right, isDown
         key {}, codes.delete, isDown
         }
   -- Alt-h: kill previous word
   elseif code == codes['h'] and _.str(mods) == '{"alt"}'
+    if not isTotalVimBindingApp!
       return true, {
         key {"alt", "shift"}, codes.left, isDown
         key {}, codes.delete, isDown
