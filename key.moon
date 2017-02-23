@@ -93,8 +93,6 @@ export state = {
 
 appBindingType = ->
   app = hs.application.frontmostApplication!
-  if _.includes conf.omniBindingApp, app\bundleID!
-    return 'omni'
   if _.includes conf.vimBindingApp, app\bundleID!
     return 'vim'
   elseif _.includes conf.partialVimBindingApp, app\bundleID!
@@ -156,57 +154,53 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         }
   -- C-a: home
   elseif code == codes['a'] and _.str(mods) == '{"ctrl"}'
-    if appIsTelegram!
+    if appBindingType! == 'other'
       return true, {
-        key {}, codes.home, isDown
+        key {"fn"}, codes.home, isDown
         }
   -- C-e: end
   elseif code == codes['e'] and _.str(mods) == '{"ctrl"}'
-    if appIsTelegram!
+    if appBindingType! == 'other'
       return true, {
-        key {}, codes.end, isDown
+        key {"fn"}, codes.end, isDown
         }
   -- C-k: kill to end
   elseif code == codes['k'] and _.str(mods) == '{"ctrl"}'
-    if appIsTelegram!
+    if appBindingType! == 'other'
       return true, {
         key {"cmd", "shift"}, codes.right, isDown
         key {}, codes.delete, isDown
         }
   -- Cmd-C-u: pageup
   elseif code == codes['u'] and _.str(mods) == '{"cmd", "ctrl"}'
-    if appBindingType! != 'vim' and appBindingType! != 'partial'
+    if appBindingType! == 'other'
       return true, {
         key {}, codes.pageup, isDown
         }
   -- Cmd-C-u: pageup
   elseif code == codes['d'] and _.str(mods) == '{"cmd", "ctrl"}'
-    if appBindingType! != 'vim' and appBindingType! != 'partial'
+    if appBindingType! == 'other'
       return true, {
         key {}, codes.pagedown, isDown
         }
  -- Alt-f: jump to next word
   elseif code == codes['f'] and _.str(mods) == '{"alt"}'
-    if appBindingType! != 'omni'
       return true, {
         key {"alt"}, codes.right, isDown
         }
   -- Alf-b: jump to previous word
   elseif code == codes['b'] and _.str(mods) == '{"alt"}'
-    if appBindingType! != 'omni'
       return true, {
         key {"alt"}, codes.left, isDown
         }
   -- Alt-d: kill next word
   elseif code == codes['d'] and _.str(mods) == '{"alt"}'
-    if appBindingType! != 'omni'
       return true, {
         key {"alt", "shift"}, codes.right, isDown
         key {}, codes.delete, isDown
         }
   -- Alt-h: kill previous word
   elseif code == codes['h'] and _.str(mods) == '{"alt"}'
-    if appBindingType! != 'omni'
       return true, {
         key {"alt", "shift"}, codes.left, isDown
         key {}, codes.delete, isDown
