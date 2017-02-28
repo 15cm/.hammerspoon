@@ -19,5 +19,9 @@ mouse =
       x: winFrame.x+winFrame.w*mousePosition.x/fullFrame.w
       y: winFrame.y+winFrame.h*mousePosition.y/fullFrame.h
     hs.mouse.setAbsolutePosition point
+  scrollUp: ->
+    hs.eventtap.scrollWheel {0,1}, {}
+  scrollDown: ->
+    hs.eventtap.scrollWheel {0,-1}, {}
 
 mouse

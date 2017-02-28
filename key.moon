@@ -52,6 +52,7 @@ app = require 'app'
 util = require 'util'
 conf = require 'conf'
 keyboard = require 'keyboard'
+mouse = require 'mouse'
 codes = hs.keycodes.map
 itunes = hs.itunes
 codes.leftShift = 56
@@ -216,6 +217,13 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         key {"alt", "shift"}, codes.left, isDown
         key {}, codes.delete, isDown
         }
+  -- Mouse Actions
+  elseif code == codes['n'] and _.str(mods) == '{"cmd", "ctrl"}'
+    mouse.scrollDown!
+    return true
+  elseif code == codes['p'] and _.str(mods) == '{"cmd", "ctrl"}'
+    mouse.scrollUp!
+    return true
   elseif keyboard\isExternalKeyboard keyboardType
     return
   -- Mapping for internal keyboard
