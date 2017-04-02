@@ -14,7 +14,7 @@ listLcag =
   c: 'com.google.Chrome'
   d: inputsrc\selectJP
   e: 'org.gnu.Emacs'
-  f: 'org.mozilla.firefox'
+  -- f: 'org.mozilla.firefox'
   g: 'com.torusknot.SourceTreeNotMAS'
   -- h: ''
   i: 'com.apple.iTunes'
@@ -29,7 +29,7 @@ listLcag =
   r: ''
   s: inputsrc\selectCHS
   t: 'com.googlecode.iterm2'
-  u: ''
+  u: 'com.eusoft.eudic'
   v: ''
   w: 'com.tapbots.TweetbotMac'
   x: 'com.apple.dt.Xcode'
