@@ -228,11 +228,11 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
     return
   -- Mapping for internal keyboard
     -- SPACE -> SPACE/LCAG
-  elseif code == codes.space and type == keyDown
+  elseif code == codes.space and type == keyDown and not state.oneDown
     state.spaceDown = true
     state.spaceDownTime = util.now! unless state.spaceDownTime
     return true
-  elseif code == codes.space and type == keyUp
+  elseif code == codes.space and type == keyUp and not state.oneDown
     state.spaceDown = false
     if state.spaceCombo
       state.spaceCombo = false
