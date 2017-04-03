@@ -54,24 +54,14 @@ class packAlignedFixed
 layout =
   frontmost: ->
     hs.window.frontmostWindow!
-  sideWindowTitle: 'Sidewise'
+  sideWindowTitle: 'Tabs Outliner'
   sideWindowWidth: 14
   moveTo: (x1, y1, x2, y2, sideIsRight = true) =>
     w = @frontmost!
-    app = w\application!
-    if app\name! == "Google Chrome" and w\title! ~= @sideWindowTitle and app\findWindow(@sideWindowTitle)
-      sideWindow = app\getWindow @sideWindowTitle
-      packAlignedFixed(sideWindow, w, @sideWindowWidth)\moveTo(x1, y1, x2, y2, isRight)
-    else
-      w\move("[#{x1}, #{y1}, #{x2}, #{y2}]")
+    w\move("[#{x1}, #{y1}, #{x2}, #{y2}]")
   nextScreen: =>
     w = @frontmost!
-    app = w\application!
-    if app\name! == "Google Chrome" and w\title! ~= @sideWindowTitle and app\findWindow(@sideWindowTitle)
-      sideWindow = app\getWindow @sideWindowTitle
-      packAlignedFixed(sideWindow, w, @sideWindowWidth)\nextScreen!
-    else
-      w\moveToScreen w\screen!\next!, true, true
+    w\moveToScreen w\screen!\next!, true, true
   leftOneThird: =>
     @moveTo 0, 0, 33, 100
   leftHalf: =>
