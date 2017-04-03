@@ -11,7 +11,7 @@ notificationCenter = require 'notification'
 listLcag =
   a: inputsrc\selectUS
   b: 'com.apple.iBooksX'
-  c: 'com.google.Chrome'
+  -- c: 'com.google.Chrome'
   d: inputsrc\selectJP
   e: 'org.gnu.Emacs'
   -- f: 'org.mozilla.firefox'
