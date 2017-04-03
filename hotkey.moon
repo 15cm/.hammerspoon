@@ -14,7 +14,7 @@ listLcag =
   -- c: 'com.google.Chrome'
   d: inputsrc\selectJP
   e: 'org.gnu.Emacs'
-  -- f: 'org.mozilla.firefox'
+  f: 'org.mozilla.firefox'
   g: 'com.torusknot.SourceTreeNotMAS'
   -- h: ''
   i: 'com.apple.iTunes'
