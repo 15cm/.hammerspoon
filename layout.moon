@@ -77,13 +77,13 @@ layout =
   max: =>
     @moveTo 0, 0, 100, 100
   leftUpCorner: =>
-    @moveTo 0, 0, 25, 25
+    @moveTo 0, 0, 33, 33
   leftDownCorner: =>
-    @moveTo 0, 75, 25, 100
+    @moveTo 0, 67, 33, 100
   rightUpCorner: =>
-    @moveTo 75, 0, 100, 25
+    @moveTo 67, 0, 100, 33
   rightDownCorner: =>
-    @moveTo 75, 75, 100, 100
+    @moveTo 67, 67, 100, 100
   screen: =>
     @nextScreen!
 layout

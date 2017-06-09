@@ -11,8 +11,7 @@ conf =
   externalDevice:
     productID: {}
     productName: { 'GH60' }
-  lcag: {'ctrl', 'alt', 'cmd'}
-  hyper: {'ctrl', 'alt', 'shift', 'cmd'}
+  hyperSpace: {'alt', 'shift', 'cmd'}
   notification:
     x: 80
     y: 80
