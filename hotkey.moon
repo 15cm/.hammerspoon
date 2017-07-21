@@ -7,6 +7,7 @@ bind = hs.hotkey.bind
 util = require 'util'
 inputsrc = require 'inputsrc'
 notificationCenter = require 'notification'
+itunes = hs.itunes
 
 listHyperSpace =
   a: inputsrc\selectUS
@@ -37,42 +38,15 @@ listHyperSpace =
   -- z: 'com.tapbots.TweetbotMac'
   -- ['0']: 'com.axosoft.gitkraken'
   ['1']:  'com.agilebits.onepassword-osx'
-  -- ['2']: layout\rightHalf
-  -- ['3']: layout\max
-  -- ['4']: layout\screen
   ["'"]: notificationCenter.switchBetweenTodayAndNotifications
   ['\\']: -> hs.openConsole true
 -- ['=']: ''
-listHyper =
-  a: ''
-  b: ''
-  c: ''
-  -- d: layout\screen
-  e: ''
-  f: ''
-  g: ''
-  -- h: layout\leftOneThird
-  i: ''
-  -- j: layout\leftHalf
-  -- k: layout\leftTwoThird
-  -- l: layout\rightTwoThird
-  -- m: layout\rightDownCorner
-  n: ''
-  o: ''
-  -- p: layout\rightUpCorner
-  -- q: layout\leftUpCorner
-  r: ''
-  s: ''
-  t: ''
-  u: ''
-  v: ''
-  w: ''
-  x: ''
-  y: ''
-  -- z: layout\leftDownCorner
-  -- [';']: layout\rightHalf
-  -- ["'"]: layout\rightOneThird
-  -- ['space']: layout\max
+listHyperTab =
+  a: -> itunes.previous! itunes.play!
+  s: -> itunes.playpause!
+  d: -> itunes.next! itunes.play!
+  x: -> itunes.volumeDown!
+  c: -> itunes.volumeUp!
 
 bind {}, 'f17', keyboard\toggleInternalKeyboard
 
@@ -83,6 +57,6 @@ for k, v in pairs listHyperSpace
     bind conf.hyperSpace, k, app.activateByBundleID(v)
     -- bind conf.hyper1, k, app.toggleByBundleID(v, true)
 
--- for k, v in pairs listHyper
---   if type(v) == 'function'
---     bind conf.hyper, k, v
+for k, v in pairs listHyperTab
+  if type(v) == 'function'
+    bind conf.hyperTab, k, v
