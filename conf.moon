@@ -12,6 +12,7 @@ conf =
     productID: {}
     productName: { 'GH60' }
   hyperSpace: {'alt', 'shift', 'cmd'}
+  hyperTab: {'ctrl', 'alt','cmd'} -- LCAG
   notification:
     x: 80
     y: 80

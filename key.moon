@@ -54,7 +54,6 @@ conf = require 'conf'
 keyboard = require 'keyboard'
 mouse = require 'mouse'
 codes = hs.keycodes.map
-itunes = hs.itunes
 codes.leftShift = 56
 codes.leftCtrl = 59
 codes.leftAlt = 58
@@ -227,7 +226,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif keyboard\isExternalKeyboard keyboardType
     return
   -- Mapping for internal keyboard
-    -- SPACE -> SPACE/LCAG
+    -- SPACE -> SPACE/HyperSpace
   elseif code == codes.space and type == keyDown and not state.oneDown
     state.spaceDown = true
     state.spaceDownTime = util.now! unless state.spaceDownTime
@@ -250,7 +249,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       return true
   elseif state.spaceDown and _.str(mods) == '{}' and type == keyDown
     state.spaceCombo = true
-    mods = _.union mods, conf.lcag
+    mods = _.union mods, conf.hyperSpace
     return true, {
       key mods, code, true
       key mods, code, false
@@ -286,16 +285,10 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif state.oneDown and type == keyDown
     state.oneCombo = true
     layer1 =
-      -- sys:
-      --   q: 'PREVIOUS'
-      --   w: 'PLAY'
-      --   e: 'NEXT'
-      --   a: 'MUTE'
-      --   s: 'SOUND_DOWN'
-      --   d: 'SOUND_UP'
-      --   f: 'ILLUMINATION_DOWN'
-      --   g: 'ILLUMINATION_UP'
-      --   h: 'ILLUMINATION_TOGGLE'
+      sys:
+        q: 'MUTE'
+        w: 'SOUND_DOWN'
+        e: 'SOUND_UP'
       key:
         ['1']: 'f1'
         ['2']: 'f2'
@@ -310,62 +303,30 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         ['-']: 'f11'
         ['=']: 'f12'
       mod:
-        a: {conf.hyper, 'a'}
-        b: {conf.hyper, 'b'}
-        c: {conf.hyper, 'c'}
-        d: {conf.hyper, 'd'}
-        e: {conf.hyper, 'e'}
-        f: {conf.hyper, 'f'}
-        g: {conf.hyper, 'g'}
-        h: {conf.hyper, 'h'}
-        i: {conf.hyper, 'i'}
-        j: {conf.hyper, 'j'}
-        k: {conf.hyper, 'k'}
-        l: {conf.hyper, 'l'}
-        m: {conf.hyper, 'm'}
-        n: {conf.hyper, 'n'}
-        o: {conf.hyper, 'o'}
-        p: {conf.hyper, 'p'}
-        q: {conf.hyper, 'q'}
-        r: {conf.hyper, 'r'}
-        s: {conf.hyper, 's'}
-        t: {conf.hyper, 't'}
-        u: {conf.hyper, 'u'}
-        v: {conf.hyper, 'v'}
-        w: {conf.hyper, 'w'}
-        x: {conf.hyper, 'x'}
-        y: {conf.hyper, 'y'}
-        z: {conf.hyper, 'z'}
-        [';']: {conf.hyper, ';'}
-        ["'"]: {conf.hyper, "'"}
-        ['space']: {conf.hyper, 'space'}
+        a: {conf.hyperTab, 'a'}
+        s: {conf.hyperTab, 's'}
+        d: {conf.hyperTab, 'd'}
+        z: {conf.hyperTab, 'z'}
+        x: {conf.hyperTab, 'x'}
+        c: {conf.hyperTab, 'c'}
 
+    layerSys = layer1.sys[codes[code]]
     layerKey = layer1.key[codes[code]]
-    -- layerSys = layer1.sys[codes[code]]
     layerMod = layer1.mod[codes[code]]
     if layerKey
       return true, {
         key mods, layerKey, true
         key mods, layerKey, false
       }
+    elseif layerSys
+      sys layerSys
+      return true
     elseif layerMod
       { modMods, modKey } = layerMod
       return true, {
         key modMods, modKey, true
         key modMods, modKey, false
       }
-    -- elseif layerSys
-    --   sys layerSys
-    --   return true
-    -- elseif code == codes.z
-    --   itunes.setVolume 1
-    --   return true
-    -- elseif code == codes.x
-    --   itunes.volumeDown!
-    --   return true
-    -- elseif code == codes.c
-    --   itunes.volumeUp!
-    --   return true
   elseif state.oneDown and type == keyUp
     return true
 
