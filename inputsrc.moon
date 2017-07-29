@@ -1,13 +1,14 @@
 inputsource =
   inputSourceUS: 'com.apple.keylayout.US'
-  inputSourceCHS: 'com.sogou.inputmethod.sogou.pinyin'
+  -- inputSourceZH: 'com.googlecode.rimeime.inputmethod.Squirrel.Rime'
+  inputSourceZH: 'com.logcg.inputmethod.LogInputMac.LogInputMacSP'
   inputSourceJP: 'com.google.inputmethod.Japanese.base'
   sourcePosition: (source) =>
     switch source
       when self.inputSourceUS
-        return 1
-      when self.inputSourceCHS
         return 2
+      when self.inputSourceZH
+        return 1
       when self.inputSourceJP
         return 3
       else return 0
@@ -20,8 +21,8 @@ inputsource =
       (hs.eventtap.event.newKeyEvent({}, 'a', true)\setKeyCode 79)\post!
   selectUS: =>
     self\switchFromTo hs.keycodes.currentSourceID!, self.inputSourceUS
-  selectCHS: =>
-    self\switchFromTo hs.keycodes.currentSourceID!, self.inputSourceCHS
+  selectZH: =>
+    self\switchFromTo hs.keycodes.currentSourceID!, self.inputSourceZH
   selectJP: =>
     self\switchFromTo hs.keycodes.currentSourceID!, self.inputSourceJP
 inputsource
