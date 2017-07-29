@@ -28,7 +28,7 @@ listHyperSpace =
   p: 'com.readdle.PDFExpert-Mac'
   q: 'com.tencent.qq'
   r: ''
-  s: inputsrc\selectCHS
+  s: inputsrc\selectZH
   t: 'com.googlecode.iterm2'
   -- u: 'com.eusoft.eudic'
   v: ''
