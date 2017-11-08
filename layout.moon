@@ -86,4 +86,7 @@ layout =
     @moveTo 67, 67, 100, 100
   screen: =>
     @nextScreen!
+  toggleFullScreen: =>
+    w = @frontmost!
+    w\toggleFullScreen!
 layout

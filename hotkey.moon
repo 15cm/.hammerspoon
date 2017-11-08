@@ -6,39 +6,40 @@ app = require 'app'
 bind = hs.hotkey.bind
 util = require 'util'
 inputsrc = require 'inputsrc'
+layout = require 'layout'
 notificationCenter = require 'notification'
 itunes = hs.itunes
 
 listHyperSpace =
   a: inputsrc\selectUS
-  b: 'com.apple.iBooksX'
-  c: 'com.google.Chrome'
+  b: 'iBooks'
+  c: 'Google Chrome'
   d: inputsrc\selectJP
-  e: 'org.gnu.Emacs'
-  f: 'org.mozilla.firefoxdeveloperedition'
-  g: 'com.torusknot.SourceTreeNotMAS'
+  e: 'Emacs'
+  f: 'Waterfox'
+  g: 'SourceTree'
   -- h: ''
-  i: 'com.apple.iTunes'
-  -- j: 'com.jetbrains.intellij'
-  k: 'com.kapeli.dashdoc'
-  l: 'org.telegram.desktop'
-  m: 'io.wavebox.wavebox'
-  n: 'com.apple.finder'
-  o: 'com.omnigroup.OmniFocus2'
-  p: 'com.readdle.PDFExpert-Mac'
-  q: 'com.tencent.qq'
-  r: ''
+  i: 'iTunes'
+  j: 'IntelliJ IDEA'
+  k: 'Dash'
+  l: 'Telegram Desktop'
+  m: 'Boxy'
+  n: 'Finder'
+  o: 'OmniFocus'
+  p: 'PDF Expert'
+  q: 'QQ'
+  -- r: 'com.github.alacritty'
   s: inputsrc\selectZH
-  t: 'com.googlecode.iterm2'
-  -- u: 'com.eusoft.eudic'
+  t: 'iTerm'
+  -- u: 'EuDic'
   v: ''
-  -- w: 'com.tencent.xinWeChat'
-  x: 'com.apple.dt.Xcode'
+  -- w: 'WeChat'
+  x: 'Xcode'
   -- y: 'com.jetbrains.pycharm'
-  -- z: 'com.tapbots.TweetbotMac'
+  z: 'Spark'
   -- ['0']: 'com.axosoft.gitkraken'
-  ['1']:  'com.agilebits.onepassword-osx'
-  ["'"]: notificationCenter.switchBetweenTodayAndNotifications
+  ['1']:  '1Password'
+  ["="]: notificationCenter.switchBetweenTodayAndNotifications
   ['\\']: -> hs.openConsole true
 -- ['=']: ''
 listHyperTab =
@@ -47,6 +48,7 @@ listHyperTab =
   d: -> itunes.next! itunes.play!
   x: -> itunes.volumeDown!
   c: -> itunes.volumeUp!
+  f: -> layout\toggleFullScreen!
 
 bind {}, 'f17', keyboard\toggleInternalKeyboard
 
@@ -54,8 +56,8 @@ for k, v in pairs listHyperSpace
   if type(v) == 'function'
     bind conf.hyperSpace, k, v
   elseif #v > 0
-    bind conf.hyperSpace, k, app.activateByBundleID(v)
-    -- bind conf.hyper1, k, app.toggleByBundleID(v, true)
+    bind conf.hyperSpace, k, app.activateByName(v)
+    -- bind conf.hyperSpace, k, app.toggleByBundleID(v, true)
 
 for k, v in pairs listHyperTab
   if type(v) == 'function'

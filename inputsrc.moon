@@ -2,15 +2,15 @@ inputsource =
   inputSourceUS: 'com.apple.keylayout.US'
   -- inputSourceZH: 'com.googlecode.rimeime.inputmethod.Squirrel.Rime'
   inputSourceZH: 'com.logcg.inputmethod.LogInputMac.LogInputMacSP'
-  inputSourceJP: 'com.google.inputmethod.Japanese.base'
+  inputSourceJP: 'com.apple.inputmethod.Kotoeri.Japanese'
   sourcePosition: (source) =>
     switch source
       when self.inputSourceUS
-        return 2
-      when self.inputSourceZH
-        return 1
-      when self.inputSourceJP
         return 3
+      when self.inputSourceZH
+        return 2
+      when self.inputSourceJP
+        return 1
       else return 0
   switchFromTo: (fromSource, toSource) =>
     fsrcPos = self\sourcePosition fromSource
