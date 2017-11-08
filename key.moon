@@ -309,6 +309,8 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         z: {conf.hyperTab, 'z'}
         x: {conf.hyperTab, 'x'}
         c: {conf.hyperTab, 'c'}
+        f: {conf.hyperTab, 'f'}
+        n: {conf.hyperTab, 'n'}
 
     layerSys = layer1.sys[codes[code]]
     layerKey = layer1.key[codes[code]]
