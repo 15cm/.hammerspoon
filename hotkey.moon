@@ -10,7 +10,7 @@ layout = require 'layout'
 notificationCenter = require 'notification'
 itunes = hs.itunes
 
-listHyperSpace =
+listHyper1 =
   a: inputsrc\selectUS
   b: 'iBooks'
   c: 'Google Chrome'
@@ -40,9 +40,9 @@ listHyperSpace =
   -- ['0']: 'com.axosoft.gitkraken'
   ['1']:  '1Password'
   ["="]: notificationCenter.switchBetweenTodayAndNotifications
-  ['\\']: -> hs.openConsole true
+  -- ['\\']: -> hs.openConsole true
 -- ['=']: ''
-listHyperTab =
+listHyper2 =
   a: -> itunes.previous! itunes.play!
   s: -> itunes.playpause!
   d: -> itunes.next! itunes.play!
@@ -52,13 +52,13 @@ listHyperTab =
 
 bind {}, 'f17', keyboard\toggleInternalKeyboard
 
-for k, v in pairs listHyperSpace
+for k, v in pairs listHyper1
   if type(v) == 'function'
-    bind conf.hyperSpace, k, v
-  elseif #v > 0
-    bind conf.hyperSpace, k, app.activateByName(v)
+    bind conf.hyper1, k, v
+  -- elseif #v > 0
+  --   bind conf.hyper1, k, app.activateByName(v)
     -- bind conf.hyperSpace, k, app.toggleByBundleID(v, true)
 
-for k, v in pairs listHyperTab
+for k, v in pairs listHyper2
   if type(v) == 'function'
-    bind conf.hyperTab, k, v
+    bind conf.hyper2, k, v
