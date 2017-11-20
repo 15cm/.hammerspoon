@@ -2,17 +2,17 @@ conf =
   debug: true
   moudle:
     reload: false
-    keyboard: true
-    key: true
+    keyboard: false
+    key: false
     layout: false
-    -- mouse: false
+    mouse: false
     hotkey: true
-    expose: true
+    expose: false
   externalDevice:
     productID: {}
     productName: { 'GH60' }
-  hyperSpace: {'alt', 'shift', 'cmd'}
-  hyperTab: {'ctrl', 'alt','cmd'} -- LCAG
+  hyper1: {'alt', 'shift', 'cmd'}
+  hyper2: {'ctrl', 'alt', 'shift', 'cmd'} -- LCAG
   notification:
     x: 80
     y: 80

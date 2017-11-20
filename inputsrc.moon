@@ -1,7 +1,7 @@
 inputsource =
   inputSourceUS: 'com.apple.keylayout.US'
-  -- inputSourceZH: 'com.googlecode.rimeime.inputmethod.Squirrel.Rime'
-  inputSourceZH: 'com.logcg.inputmethod.LogInputMac.LogInputMacSP'
+  inputSourceZH: 'com.googlecode.rimeime.inputmethod.Squirrel.Rime'
+  -- inputSourceZH: 'com.logcg.inputmethod.LogInputMac.LogInputMacSP'
   inputSourceJP: 'com.apple.inputmethod.Kotoeri.Japanese'
   sourcePosition: (source) =>
     switch source
